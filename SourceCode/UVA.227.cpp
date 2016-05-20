@@ -24,6 +24,7 @@ int main(){
 		for(int i = 1; i <=25; i++){
 			if(a[i] == ' ') index = i;
 		}
+		if(kase) printf("\n");
 		printf("Puzzle #%d:\n", ++kase);
 		int f = 1;
 		while((c = getchar()) != '0'){
@@ -44,20 +45,21 @@ int main(){
 					if(index % 5 == 0) {f = 0; break;}
 					else {a[index] = a[index + 1]; index += 1; a[index] = ' '; break;}
 				}	
-			}
-			if(f == 0) {
-				printf("This puzzle has no final configuration.\n\n");
-				while(getchar() != '0');
-				break;
+				case('\r'):{break;}
+				case('\n'):{break;}
+				default:{
+					f = 0; break;
+				}
 			}
 		}
-		if(f == 0) continue;
-		for(int i = 1; i <=25; i++){
-			if((i-1)%5 == 0) printf("%c ", a[i]);
-			else if(i%5 !=0) printf(" %c ", a[i]);
-			else if(i%5 == 0)printf("%c\n", a[i]);
-		}
-		printf("\n");
+		if(f == 1){
+			for(int i = 1; i <=25; i++){
+				if((i-1)%5 == 0) printf("%c ", a[i]);
+				else if(i%5 !=0) printf("%c ", a[i]);
+				else if(i%5 == 0)printf("%c\n", a[i]);
+			}
+		}else 
+			printf("This puzzle has no final configuration.\n");
 	}
 	return 0;
 }

@@ -1,6 +1,11 @@
 #include<stdio.h>
 int main()
 {
+#ifdef LOCAL
+	freopen("UVA.100.in", "r", stdin);
+	freopen("UVA.100.out", "w", stdout);
+#endif
+
 	int i, j, t, k, m;
 	while(scanf("%d%d", &i, &j) == 2){
 		k = i; m = j;
