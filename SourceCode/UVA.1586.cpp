@@ -7,6 +7,7 @@ int main(){
 	freopen("UVA.1586.in", "r", stdin);
 	freopen("UVA.1586.out", "w", stdout);
 #endif
+
 	int T;
 	scanf("%d", &T);
 	while(T--){
