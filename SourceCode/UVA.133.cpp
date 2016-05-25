@@ -20,15 +20,9 @@ int main(){
 				if(a[p2]==0 && (++c==m)) break;
 				p2= p2==1?n:(p2-1);
 			}
+			printf("%3d", p1); left--;
+			if(p1!=p2){printf("%3d", p2); left--;}
 			a[p1]=a[p2]=1;
-			if(p1!=p2){
-				left -=2;
-				printf("%3d%3d", p1, p2);
-			}
-			else{
-				left -=1;
-				printf("%3d", p1);
-			}
 			if(left) printf(",");
 		}
 		printf("\n");
