@@ -83,16 +83,15 @@ void statistics(){
 	printf("Mathematics\nAverage Score: %.2lf\nNumber of passed students: %d\nNumber of failed students: %d\n\n", ((double)m)/cnt+EPS, cp[1], cf[1]);
 	printf("English\nAverage Score: %.2lf\nNumber of passed students: %d\nNumber of failed students: %d\n\n", ((double)e)/cnt+EPS, cp[2], cf[2]);
 	printf("Programming\nAverage Score: %.2lf\nNumber of passed students: %d\nNumber of failed students: %d\n\n", ((double)p)/cnt+EPS, cp[3], cf[3]);
-	int x=0; for(int i=0; i<n; i++) if(pass[i]==4) x++;
-	printf("Overall:\nNumber of students who passed all subjects: %d\n", x);
-	x=0; for(int i=0; i<n; i++) if(pass[i]>=3) x++;
-	printf("Number of students who passed 3 or more subjects: %d\n", x);
-	x=0; for(int i=0; i<n; i++) if(pass[i]>=2) x++;
-	printf("Number of students who passed 2 or more subjects: %d\n", x);
-	x=0; for(int i=0; i<n; i++) if(pass[i]>=1) x++;
-	printf("Number of students who passed 1 or more subjects: %d\n", x);
-	x=0; for(int i=0; i<n; i++) if(pass[i]==0) x++;
-	printf("Number of students who failed all subjects: %d\n\n", x);
+
+	int cn[5]={0,0,0,0,0};
+	for(int i=0; i<n; i++) if(pass[i]>=0) cn[pass[i]]++;
+	
+	printf("Overall:\nNumber of students who passed all subjects: %d\n", cn[4]);
+	printf("Number of students who passed 3 or more subjects: %d\n", cn[4]+cn[3]);
+	printf("Number of students who passed 2 or more subjects: %d\n", cn[4]+cn[3]+cn[2]);
+	printf("Number of students who passed 1 or more subjects: %d\n", cn[4]+cn[3]+cn[2]+cn[1]);
+	printf("Number of students who failed all subjects: %d\n\n", cn[0]);
 }
 int main(){
 #ifdef LOCAL
