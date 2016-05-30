@@ -30,21 +30,12 @@ int main(){
 				for(int y = 1; y <= d - len; y++){
 					int k;
 					for(k = 0; k < len; k++){
-						if(h[x][y + k] != 1) break;
+						if(h[x][y + k] != 1 
+							|| h[x + len][y + k] != 1
+							|| v[y][x + k] != 1 
+							|| v[y + len][x + k] != 1) break;
 					}
-					if(k != len) continue; 
-					for(k = 0; k < len; k++){
-						if(h[x + len][y + k] != 1) break;
-					}
-					if(k != len) continue; 
-					for(k = 0; k < len; k++){
-						if(v[y][x + k] != 1) break;
-					}
-					if(k != len) continue; 
-					for(k = 0; k < len; k++){
-						if(v[y + len][x + k] != 1) break;			
-					}
-					if(k != len) continue; 
+					if(k != len) continue;
 					count[len]++;
 				}
 			}	
