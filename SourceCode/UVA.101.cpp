@@ -38,6 +38,7 @@ void print(){
 }
 
 int main(){
+	ios::sync_with_stdio(false);
 #ifdef LOCAL
 	freopen("UVA.101.in", "r", stdin);
 	freopen("UVA.101.out", "w", stdout);
