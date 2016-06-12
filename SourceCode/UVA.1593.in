@@ -1,0 +1,4 @@
+  start:  integer;    // begins here
+stop: integer; //  ends here
+ s:  string;
+c:   char; // temp
