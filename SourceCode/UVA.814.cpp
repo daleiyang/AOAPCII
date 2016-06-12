@@ -3,7 +3,6 @@
 #include<map>
 #include<set>
 #include<vector>
-#include<algorithm>
 #include<cstdio>
 using namespace std;
 
@@ -21,15 +20,10 @@ int main(){
 #endif
 	string s, t;
 	int k;
-	map<string, set<string> > m;
+	set<string> m;
 	while(cin >> s && s !="*"){
 		cin >> s >> k;
-		set<string> ul;
-		while(k--){
-			cin >> t;
-			if(!ul.count(t)) ul.insert(t);
-		}
-		if(!m.count(s)) m[s] = ul;
+		while(k--){cin >> t; m.insert(t + "@" + s);}
 	}
 	
 	while(cin >> s && s != "*"){
@@ -43,18 +37,13 @@ int main(){
 		while(cin >> t && t != "*"){
 			string receiver, rmta;
 			parse_address(t, receiver, rmta);
-			if(!s1.count(rmta)) {
-				s1.insert(rmta);
-				mta.push_back(rmta);
-			}
+			if(s1.count(t)) continue;
+			s1.insert(t);
 			if(!m1.count(rmta)){
 				m1[rmta] = vector<string>();
-				m1[rmta].push_back(receiver);
+				mta.push_back(rmta);
 			}
-			else{
-				vector<string>::iterator r = find(m1[rmta].begin(), m1[rmta].end(), receiver);
-     			if(r == m1[rmta].end()) m1[rmta].push_back(receiver);
-			}
+			m1[rmta].push_back(t);
 		}
 		getline(cin, t);
 		string data;
@@ -68,8 +57,8 @@ int main(){
 			cout << "     MAIL FROM:<"<<s<<">\n"<<"     250"<<"\n";
 			bool needsend = false;
 			for(unsigned int j = 0; j < users.size(); j++){
-				cout << "     RCPT TO:<"<<users[j]<<"@"<<mta2<<">\n";
-				if(!m[mta2].count(users[j])) cout <<"     550"<<"\n";
+				cout << "     RCPT TO:<"<<users[j]<<">\n";
+				if(!m.count(users[j])) cout <<"     550"<<"\n";
 				else{
 					cout <<"     250"<<"\n";
 					needsend = true;
