@@ -8,7 +8,7 @@ int main(){
 	freopen("UVA.232.out", "w", stdout);
 #endif
 	int r, c, kase = 0;
-	char t[11];
+	char temp[11];
 	while(1){
 		memset(a, 0, sizeof(a));
 		memset(p, 0, sizeof(p));
@@ -16,9 +16,9 @@ int main(){
 		if(r == 0) break;
 		scanf("%d", &c);
 		for(int i = 0; i < r; i++){
-			scanf("%s", t);
+			scanf("%s", temp);
 			for(int j = 0; j < c; j++){
-				a[i][j] = t[j];
+				a[i][j] = temp[j];
 			}
 		}
 		int t = 0;
