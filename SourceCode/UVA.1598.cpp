@@ -1,4 +1,5 @@
 #include<cstdio>
+#include<cstring>
 #include<iostream>
 #include<sstream>
 #include<queue>
@@ -29,11 +30,11 @@ void clean(){
 }
 
 void quote(){
-	cout << "QUOTE ";
-	if(bpq.empty()) {cout << "0 0 - ";}
-	else{cout << buysize[bpq.top()] << " " << bpq.top() << " - ";}
-	if(spq.empty()) {cout << "0 99999" << endl;}
-	else{cout << sellsize[spq.top()] << " " << spq.top() << endl;}
+	printf("QUOTE ");
+	if(bpq.empty()) {printf("0 0 - ");}
+	else{printf("%d %d - ", buysize[bpq.top()], bpq.top());}
+	if(spq.empty()) {printf("0 99999\n");}
+	else{ printf("%d %d\n", sellsize[spq.top()], spq.top());}
 }
 
 void cleanTop(){
@@ -51,7 +52,7 @@ void buyOrder(int p, int q, int price, int t){
 		}
 		
 		if(orders[buy[p][i]].s < q) {
-			if(t == 2) {cout << "TRADE " << orders[buy[p][i]].s << " " << price << endl;} //new order is for sell. find corresponding buy order for it.
+			if(t == 2) {printf("TRADE %d %d\n", orders[buy[p][i]].s, price);} //new order is for sell. find corresponding buy order for it.
 			q -= orders[buy[p][i]].s; 
 			buysize[p] -= orders[buy[p][i]].s; 
 			orders[buy[p][i]].s = 0; 
@@ -61,7 +62,7 @@ void buyOrder(int p, int q, int price, int t){
 		}
 		
 		if(orders[buy[p][i]].s >= q){
-			if(t == 2) {cout << "TRADE " << q << " " << price << endl;} //new order is for sell. find corresponding buy order for it.
+			if(t == 2) {printf("TRADE %d %d\n", q, price);} //new order is for sell. find corresponding buy order for it.
 			buysize[p] -= q; 
 			orders[buy[p][i]].s -= q;
 			q = 0; 
@@ -81,7 +82,7 @@ void sellOrder(int p, int q, int price, int t){
 		}
 		
 		if(orders[sell[p][i]].s < q) {
-			if(t == 1) {cout << "TRADE " << orders[sell[p][i]].s << " " << price << endl; } //new order is for buy. find corresponding sell order for it.
+			if(t == 1) {printf("TRADE %d %d\n", orders[sell[p][i]].s, price);} //new order is for buy. find corresponding sell order for it.
 			q -= orders[sell[p][i]].s; 
 			sellsize[p] -= orders[sell[p][i]].s; 
 			orders[sell[p][i]].s = 0; 
@@ -91,7 +92,7 @@ void sellOrder(int p, int q, int price, int t){
 		}
 		
 		if(orders[sell[p][i]].s >= q){
-			if(t == 1) {cout << "TRADE " << q << " " << price << endl; }  //new order is for buy. find corresponding sell order for it.
+			if(t == 1) {printf("TRADE %d %d\n", q, price);}  //new order is for buy. find corresponding sell order for it.
 			sellsize[p] -= q; 
 			orders[sell[p][i]].s -= q; 
 			q = 0; 
@@ -107,15 +108,14 @@ int main(){
 	freopen("UVA.1598.in", "r", stdin);
 	freopen("UVA.1598.out", "w", stdout);
 #endif
-	int T, size, price, id, t, idx, kase = 0;; string s, s1;
-	while(cin >> T){
+	int T, size, price, id, t, idx, kase = 0;; string s, s1; char input[10];
+	while(scanf("%d", &T) == 1){
 		clean();
-		getline(cin, s);
-		if(kase++) {cout << endl;}
+		if(kase++) {printf("\n");}
 		while(T--){
-			cin >> s; 
-			if(s == "CANCEL"){
-				cin >> id; getline(cin, s1);
+			scanf("%s", input);
+			if(strcmp(input, "CANCEL") == 0){
+				scanf("%d", &id);
 				orders.push_back(order(3, 0, 0));
 				
 				if(orders[id-1].t == 1){buysize[orders[id-1].p] -= orders[id-1].s;}
@@ -126,9 +126,9 @@ int main(){
 				quote();
 				continue;
 			}
-			if(s == "BUY" || s == "SELL"){
-				cin >> size >> price; getline(cin, s1);
-				t = s=="BUY" ? 1 : 2;
+			if((strcmp(input, "BUY") == 0) || (strcmp(input, "SELL") == 0)){
+				scanf("%d%d", &size, &price);
+				t = strcmp(input, "BUY") == 0 ? 1 : 2;
 				orders.push_back(order(t, size, price));
 				idx = orders.size()-1;
 				if(t == 1){
