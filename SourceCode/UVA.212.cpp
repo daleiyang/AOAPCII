@@ -38,7 +38,7 @@ int main(){
 	freopen("UVA.212.in", "r", stdin);
 	freopen("UVA.212.out", "w", stdout);
 #endif
-	while(scanf("%d%d%d%d%d%d%d", &opnum, &bednum, &otime, &opToBed, &opreset, &bedreset, &pnum) == 7){;
+	while(scanf("%d%d%d%d%d%d%d", &opnum, &bednum, &otime, &opToBed, &opreset, &bedreset, &pnum) == 7){
 		p.clear(); r.clear(); b.clear();
 		PQ empty; swap(pq, empty);
 		for(int i = 1; i <= pnum; i++){
