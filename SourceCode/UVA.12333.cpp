@@ -75,7 +75,6 @@ int main(){
 		FF[count] = '\0';
 		trie.insert(FF, i);
 	}
-	FF[0]='1'; FF[1]='\0';
 	int T;
 	scanf("%d", &T);
 	for(int i = 1; i <= T; i++){
