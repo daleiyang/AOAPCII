@@ -6,50 +6,65 @@
 using namespace std;
 
 const int maxn = 256 + 10;
-const int root = 1;
 
-int left[maxn], right[maxn], value[maxn], cnt;
-bool have_value[maxn];
+struct Node{
+	int v;
+	bool have_value;
+	Node * left, * right;
+	Node():have_value(false), left(NULL), right(NULL){}
+};
+Node * root;
 
-void newtree(){
-	memset(left, 0, sizeof(left));
-	memset(right, 0, sizeof(right));
-	memset(have_value, 0, sizeof(have_value));
-  	left[root] = right[root] = 0;
-	have_value[root] = false;
-	cnt = root;
+Node node[maxn];
+queue<Node *> freenodes;
+void init(){
+	for(unsigned int i = 0; i < maxn; i++){
+		freenodes.push(&node[i]);
+	}
 }
 
-int newnode(){
-	int u = ++cnt; 
-	left[u] = right[u] = 0; 
-	have_value[u] = false;
+Node * newnode(){
+	Node * u = freenodes.front();
+	u->left = NULL; u->right = NULL; u->have_value=false; u->v=0;
+	freenodes.pop();
 	return u;
 }
+
+void deletenode(Node * u){
+	freenodes.push(u);
+}
+
+void remove_tree(Node * root){
+	if(root == NULL) return;
+	if(root->left != NULL) remove_tree(root->left);
+	if(root->right != NULL) remove_tree(root->right);
+	deletenode(root);
+}	
 
 bool failed;
 void addnode(int v, char * s){
 	int n = strlen(s);
-	int u = root;
+	Node * u = root;
 	for(int i = 0; i < n; i++){
 		if(s[i] == 'L'){
-			if(left[u] == 0) left[u] = newnode();
-			u = left[u];
+			if(u->left == NULL) u->left = newnode();
+			u = u->left;
 		}
 		else if(s[i] == 'R'){
-			if(right[u] == 0) right[u] = newnode();
-			u = right[u];
+			if(u->right == NULL) u->right = newnode();
+			u = u->right;
 		}
 	}
-	if(have_value[u]) failed = true;  //test repeated assignment
-	value[u] = v;
-	have_value[u] = true;
+	if(u->have_value) failed = true;  //test repeated assignment
+	u->v = v;
+	u->have_value = true;
 }
 
 char s[maxn];
 bool read_input(){
 	failed = false;
-	newtree();
+	remove_tree(root);
+	root = newnode();
 	for(;;){
 		if(scanf("%s", s) != 1) return false;
 		if(!strcmp(s, "()")) break;
@@ -61,15 +76,15 @@ bool read_input(){
 }
 
 bool bfs(vector<int> & ans){
-	queue<int> q;
+	queue<Node *> q;
 	ans.clear();
 	q.push(root);
 	while(!q.empty()){
-		int u = q.front(); q.pop();
-		if(!have_value[u]) return false; // test non-assignment node
-		ans.push_back(value[u]);
-		if(left[u] != 0) q.push(left[u]);
-		if(right[u] != 0) q.push(right[u]);
+		Node * u = q.front(); q.pop();
+		if(!u->have_value) return false; // test non-assignment node
+		ans.push_back(u->v);
+		if(u->left != NULL) q.push(u->left);
+		if(u->right !=NULL) q.push(u->right);
 	}
 	return true;
 }
@@ -80,6 +95,7 @@ int main(){
 	freopen("UVA.122.out", "w", stdout);
 #endif
 	vector<int> ans;
+	init();
 	while(read_input()){
 		if(!bfs(ans)) failed = true;
 		if(failed) printf("not complete\n");
