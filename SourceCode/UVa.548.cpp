@@ -1,4 +1,5 @@
 #include<cstdio>
+#include<cstring>
 #include<string>
 #include<iostream>
 #include<sstream>
@@ -18,42 +19,36 @@ bool read_line(int * order){
 	return n > 0;
 }
 
-int build(int L1, int R1, int L2, int R2){
-	if(L1 > R1) return 0;
+int best, best_sum;
+
+int build(int L1, int R1, int L2, int R2, int sum){
+	if(L1 > R1) {return 0;}
 	int root = postorder[R2];
+	sum += root;
 	int p = L1;
 	while(inorder[p] != root) p++;
 	int cnt = p - L1;
-	l[root] = build(L1, p-1, L2, L2+cnt-1);
-	r[root] = build(p+1, R1, L2+cnt, R2-1);
-	return root;
-}
-
-int best, best_sum;
-
-void dfs(int u, int sum){
-	sum += u;
-	if(!l[u] && !r[u]){
-		if(sum < best_sum || (sum == best_sum && u < best)){
-			best = u;
+	l[root] = build(L1, p-1, L2, L2+cnt-1, sum);
+	r[root] = build(p+1, R1, L2+cnt, R2-1, sum);
+	if(!l[root] && !r[root]){
+		if(sum < best_sum || (sum == best_sum && L1 < best)){
+			best = inorder[L1];
 			best_sum = sum;
 		}
 	}
-	if(l[u]) dfs(l[u], sum);
-	if(r[u]) dfs(r[u], sum);
+	return root;
 }
 
 int main(){
+	ios::sync_with_stdio(false);
 #ifdef LOCAL
 	freopen("UVA.548.in", "r", stdin);
 	freopen("UVA.548.out", "w", stdout);
 #endif
-	string s;
 	while(read_line(inorder)){
 		read_line(postorder);
-		build(0, n-1, 0 , n-1);
 		best_sum = 100000000;
-		dfs(postorder[n-1], 0);
+		build(0, n-1, 0 , n-1, 0);
 		cout << best << endl;
 	}
 	return 0;
