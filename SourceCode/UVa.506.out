@@ -1,0 +1,40 @@
+INSTALL A 
+   Installing A
+LIST 
+   A
+REMOVE A 
+   Removing A
+LIST 
+INSTALL B 
+   Installing B
+INSTALL C 
+   Installing C
+INSTALL A 
+   Installing A
+REMOVE A 
+   Removing A
+INSTALL K 
+   Installing K
+LIST 
+   B
+   C
+   K
+REMOVE C 
+   Removing C
+REMOVE A 
+   A is not installed.
+INSTALL A 
+   Installing A
+LIST 
+   B
+   K
+   A
+INSTALL C 
+   Installing C
+REMOVE A 
+   Removing A
+LIST 
+   B
+   K
+   C
+END 
