@@ -1,71 +1,64 @@
 #include<iostream>
 #include<cstdio>
 #include<string>
+#include<cstring>
 #include<sstream>
 #include<vector>
 #include<map>
 #include<set>
+#include<algorithm>
 using namespace std;
 
-vector<string> commands;
-vector<vector<int> > depend, depend2;
-vector<int> status; //0 for not installed, 1 for explicitly installed, 2 for implicitly installed
+const int maxn = 10000;
+
+int cnt = 0;
 map<string, int> mapping;
-vector<int> orderV;
-map<int, int> orderM;
+string commands[maxn];
+
+vector<int> depend[maxn], depend2[maxn];
+int status[maxn]; //0 for not installed, 1 for explicitly installed, 2 for implicitly installed
+vector<int> installed;
 
 int ID(string s){
-	if(mapping.count(s)>0) {return mapping[s];}
-	commands.push_back(s);
-	int id = commands.size()-1;
-	depend.push_back(vector<int>());
-	depend2.push_back(vector<int>());
-	status.push_back(0);
-	mapping[s] = id;
-	return id;
+	if(!mapping.count(s)){
+		commands[cnt] = s;
+		mapping[s] = cnt++;
+	}
+	return mapping[s];
 }
 
-void OrderId(int i){
-	if(orderM.count(i)>0 && orderV[orderM[i]] != -1) {return;}
-	orderV.push_back(i);
-	int id = orderV.size()-1;
-	orderM[i] = id;
-}
-
-void installDep(int id, int step){
+void install(int id, bool toplevel){
 	for(unsigned int i = 0; i < depend[id].size(); i++){
 			if(status[depend[id][i]] == 0){
-				installDep(depend[id][i], step+1);
+				install(depend[id][i], false);
 			}
 	}
-	status[id] = step == 1?1:2;
+	status[id] = toplevel ? 1 : 2;
 	cout << "   Installing " << commands[id] << endl;
-	OrderId(id);
+	installed.push_back(id);
 }
 
-void removeDep(int id, int step){
-	bool flag = true;
+bool needed(int id){
 	for(unsigned int i = 0; i < depend2[id].size(); i++){
-		if(status[depend2[id][i]] != 0) flag = false;
+		if(status[depend2[id][i]]) return true;
 	}
-	if(flag){
-		if((status[id] == 1 && step == 1) || (status[id] == 2 && step > 1)) {
-				status[id] = 0;
-				cout << "   Removing " << commands[id] << endl;
-				orderV[orderM[id]] = -1;
-		}
-		for(unsigned int i = 0; i < depend[id].size(); i++){
-			removeDep(depend[id][i], step+1);
-		}
+	return false;
+}
+
+void remove(int id, bool toplevel){
+	if(!needed(id) && ((status[id] == 1 && toplevel) || (status[id] == 2 && !toplevel))) {
+		status[id] = 0;
+		cout << "   Removing " << commands[id] << endl;
+		installed.erase(remove(installed.begin(), installed.end(), id), installed.end());
 	}
-	else if(!flag && step == 1){
-		cout << "   " << commands[id] << " is still needed.\n";
+	for(unsigned int i = 0; i < depend[id].size(); i++){
+		remove(depend[id][i], false);
 	}
 }
 
 void list(){
-	for(unsigned int i = 0; i < orderV.size(); i++){
-		if(orderV[i] != -1 && status[orderV[i]] != 0) cout << "   " << commands[orderV[i]] << endl;
+	for(unsigned int i = 0; i < installed.size(); i++){
+		cout << "   " << commands[installed[i]] << endl;
  	}
 }
 
@@ -75,32 +68,32 @@ int main(){
 	freopen("UVa.506.in", "r", stdin);
 	freopen("UVa.506.out", "w", stdout);
 #endif
-	string s, t;
+	string s, t, t2;
+	memset(status, 0, sizeof(status));
 	while(getline(cin, s)){
 		cout << s <<endl;
 		stringstream ss(s);
 		ss >> t;
-		if(t == "END") break;
-		if(t == "LIST") {list();}
-		else if(t == "DEPEND"){
-			ss >> t;
-			int ida = ID(t);
-			while(ss >> t){
-				int idb = ID(t);
-				depend[ida].push_back(idb);
-				depend2[idb].push_back(ida);
+		if(t[0] == 'E') break;
+		if(t[0] == 'L') list();
+		else{
+			ss >> t2;
+			int ida = ID(t2);
+			if(t[0] == 'D'){
+				while(ss >> t2){
+					int idb = ID(t2);
+					depend[ida].push_back(idb);
+					depend2[idb].push_back(ida);
+				}
 			}
-		}
-		else if(t == "INSTALL"){
-			ss >> t;
-			int id = ID(t);
-			if(status[id] != 0){cout << "   " << t << " is already installed.\n"; continue;}
-			installDep(id, 1);
-		}else if(t == "REMOVE"){
-			ss >> t;
-			int id  = ID(t);
-			if(status[id] == 0){cout << "   " << t << " is not installed.\n"; continue;}
-			removeDep(id, 1);
+			else if(t[0] == 'I'){
+				if(status[ida] != 0){cout << "   " << t2 << " is already installed.\n"; continue;}
+				install(ida, true);
+			}else if(t[0] == 'R'){
+				if(!status[ida]){cout << "   " << t2 << " is not installed.\n";}
+				else if(needed(ida)){cout << "   " << t2 << " is still needed.\n";}
+				else remove(ida, true);
+			}
 		}
 	}
 	return 0;
