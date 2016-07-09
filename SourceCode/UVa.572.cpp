@@ -19,8 +19,8 @@ void dfs(int r, int c, int & cnt){
 
 int main(){
 #ifdef LOCAL
-		freopen("UVA.572.in", "r", stdin);
-		freopen("UVA.572.out", "w", stdout);
+		freopen("UVa.572.in", "r", stdin);
+		freopen("UVa.572.out", "w", stdout);
 #endif
 	while(scanf("%d%d", &n ,&m) == 2 && n && m){
 		cnt = 0;

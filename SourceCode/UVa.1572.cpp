@@ -39,8 +39,8 @@ bool find_cycle(){
 
 int main(){
 #ifdef LOCAL
-		freopen("UVA.1572.in", "r", stdin);
-		freopen("UVA.1572.out", "w", stdout);
+		freopen("UVa.1572.in", "r", stdin);
+		freopen("UVa.1572.out", "w", stdout);
 #endif
 	int n;
 	while(scanf("%d", &n) == 1){
