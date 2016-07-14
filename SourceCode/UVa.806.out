@@ -1,0 +1,22 @@
+Image 1
+9 14 17 22 23 44 63 69 88 94 113
+Total number of black nodes = 11
+
+Image 2
+........
+........
+....****
+....****
+...*****
+..******
+..****..
+..***...
+
+Image 3
+Total number of black nodes = 0
+
+Image 4
+****
+****
+****
+****
