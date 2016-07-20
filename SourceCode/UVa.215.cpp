@@ -20,39 +20,27 @@ char exp[r][c][len];
 
 void input(){
 	memset(v, 0, sizeof(v));
-	memset(type, 0, sizeof(type));
-	memset(value, 0, sizeof(value));
+	memset(vis, 0, sizeof(vis));
 	memset(circle, 0, sizeof(circle));
-	memset(exp, 0, sizeof(exp));
-	
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < m; j++){
 			scanf("%s", exp[i][j]);
 			int slen = strlen(exp[i][j]);
-			int idx = 0, sign;
-			if(isalpha(exp[i][j][0])){
-				v[i][j].push_back(node(2, 1, exp[i][j][0]-'A', exp[i][j][1]-'0', 0));
-				idx = 2;
-			}else{
-				int t = 0;
-				if(exp[i][j][0] == '-') {idx = 1; sign = -1;} else {idx = 0; sign = 1;}
-				do{t = t*10 + exp[i][j][idx++]-'0';}
-				while(isdigit(exp[i][j][idx]));
-				v[i][j].push_back(node(1, sign, 0, 0, t));
-			}
-			while(idx < slen && (exp[i][j][idx] == '+' || exp[i][j][idx] == '-')){
-					sign = exp[i][j][idx] == '+' ? 1 : -1;
-					idx++;
-					if(isdigit(exp[i][j][idx])){
-						int t = 0;
-						do{t = t*10 + exp[i][j][idx++]-'0';}
-						while(isdigit(exp[i][j][idx]));
-						v[i][j].push_back(node(1, sign, 0, 0, t));
-					}
-					else if(isalpha(exp[i][j][idx])){
-						v[i][j].push_back(node(2, sign, exp[i][j][idx]-'A', exp[i][j][idx+1]-'0', 0));
-						idx += 2;
-					}
+			int idx = 0, sign;		
+			while(idx < slen && (exp[i][j][idx] == '+' || exp[i][j][idx] == '-' || isdigit(exp[i][j][idx]) || isalpha(exp[i][j][idx]))){
+				if (exp[i][j][idx] == '-') {sign = -1; idx++;}
+				else if(exp[i][j][idx] == '+') {sign = 1; idx++;}
+				else {sign = 1;}
+				if(isdigit(exp[i][j][idx])){
+					int t = 0;
+					do{t = t*10 + exp[i][j][idx++]-'0';}
+					while(isdigit(exp[i][j][idx]));
+					v[i][j].push_back(node(1, sign, 0, 0, t));
+				}
+				else if(isalpha(exp[i][j][idx])){
+					v[i][j].push_back(node(2, sign, exp[i][j][idx]-'A', exp[i][j][idx+1]-'0', 0));
+					idx += 2;
+				}
 			}
 			type[i][j] = 2; //is express;
 		}
@@ -88,7 +76,6 @@ void solve(){
 	bool f = true; int x;
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < m; j++){
-			memset(vis, 0, sizeof(vis));
 			if(!calculate(x, i, j)){
 				circle[i][j] = 1;
 				if(f) f = false;
