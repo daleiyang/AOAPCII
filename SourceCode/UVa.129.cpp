@@ -4,44 +4,25 @@ using namespace std;
 const int maxn = 1024;
 int A[maxn], n, L, cnt;
 
-void print(int cur){
-	for(int i = 0; i < cur; i++){
-		if(i > 0 && i%64 == 0){
-			printf("\n%c", 'A'+A[i]);
-		}else if(i > 0 && i%4 == 0){
-			printf(" %c", 'A'+A[i]);
-		}
-		else printf("%c", 'A'+A[i]);
-	}
-	printf("\n%d\n", cur);
-}
-
 int dfs(int cur){
 	if(cnt == n){
-		print(cur);
-		return 0;
-	}else{
-		for(int i = 0; i < L; i++){
-			A[cur] = i;
-			int hard = 1;
-			for(int j = cur - 1; j >= cur/2; j--){
-				int x = j, y = cur, repeat = 1;
-				while(y > j){
-					if(A[y] != A[x]){
-						repeat = 0; 
-						break;
-					}
-					y--; x--;
-				}
-				if(repeat){
-					hard = 0; break;
-				}
-			}
-			if(hard){
-				cnt++;
-				if(!dfs(cur+1)) return 0;
-			}
+		for(int i = 0; i < cur; i++){
+			if(i > 0 && i%64 == 0) printf("\n");
+			else if(i > 0 && i%4 == 0) printf(" ");
+			printf("%c", 'A'+A[i]);
 		}
+		printf("\n%d\n", cur);
+		return 0;
+	}
+	for(int i = 0; i < L; i++){
+		A[cur] = i;
+		int hard = 1;
+		for(int j = cur - 1; j >= cur/2; j--){
+			int x = j, y = cur, repeat = 1;
+			for(; y>j; y--, x--){if(A[y] != A[x]){repeat = 0; break;}}
+			if(repeat){hard = 0; break;}
+		}
+		if(hard){cnt++; if(!dfs(cur+1)) return 0;}
 	}
 	return 1;
 }
