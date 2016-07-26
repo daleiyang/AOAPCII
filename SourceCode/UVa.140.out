@@ -1,0 +1,7 @@
+A B C F G D H E -> 3
+A B C F G D H E -> 3
+A B C D E F G H -> 1
+A B H C G D F E -> 2
+C D B E A F H G -> 2
+A B H C E G D F -> 3
+A B C D E F G H -> 7
