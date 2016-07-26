@@ -46,7 +46,7 @@ int main(){
 			int bandwidth = 0;
 			for(int i = 0; i < n; i++){
 				int le = v[p[i]].size();
-				//if(le >= ans) goto L; //prune
+				if(le/2 >= ans) goto L; //prune
 				for(int j = 0; j < le;  j++){
 					int band = abs(pos[p[i]] - pos[v[p[i]][j]]);
 					if(band >= ans) goto L; //prune
