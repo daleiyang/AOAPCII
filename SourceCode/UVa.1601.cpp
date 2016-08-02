@@ -21,16 +21,23 @@ bool conflict(int a, int a2, int b, int b2){
 }
 
 int d[maxn][maxn][maxn]; //distance from starting state
+int d2[maxn][maxn][maxn]; 
 
 int bfs(){
-	queue<int> q;
-	memset(d, -1 ,sizeof(d));
+	queue<int> q, q2;
 	q.push(ID(s[0], s[1], s[2]));
+	q2.push(ID(t[0], t[1], t[2]));
+
+	memset(d, -1 ,sizeof(d));
+	memset(d2, -1 ,sizeof(d2));
 	d[s[0]][s[1]][s[2]] = 0;
-	while(!q.empty()){
+	d2[t[0]][t[1]][t[2]] = 0;
+
+	while(!q.empty() && !q2.empty()){
+		//for the first queue
 		int u = q.front(); q.pop();
 		int a = (u>>16)&0xff, b = (u>>8)&0xff, c = u&0xff;
-		if(a == t[0] && b == t[1] && c == t[2]) return d[a][b][c];
+		if(a == t[0] && b == t[1] && c == t[2]) return d[a][b][c]; //q1 reach target, search finished.
 		for(int i = 0; i < deg[a]; i++){
 			int a2 = G[a][i];
 			for(int j = 0; j < deg[b]; j++){
@@ -40,9 +47,31 @@ int bfs(){
 					int c2 = G[c][k];
 					if(conflict(a, a2, c, c2)) continue;
 					if(conflict(b, b2, c, c2)) continue;
-					if(d[a2][b2][c2] != -1) continue;
-					d[a2][b2][c2] = d[a][b][c] + 1;
+					if(d2[a2][b2][c2] != -1) return d[a][b][c] + d2[a2][b2][c2];  //has been visited by q2, search finished.
+					else if(d[a2][b2][c2] != -1) continue;     //been visited by q1, not q2, ignore this node.
+					d[a2][b2][c2] = d[a][b][c] + 1; 	//not visited by q1 and q2, push into queue.
 					q.push(ID(a2, b2, c2));
+				}
+			}
+		}
+
+		//for the second queue
+		u = q2.front(); q2.pop();
+		a = (u>>16)&0xff, b = (u>>8)&0xff, c = u&0xff;
+		if(a == s[0] && b == s[1] && c == s[2]) return d2[a][b][c]; //q2 reach target, search finished.
+		for(int i = 0; i < deg[a]; i++){
+			int a2 = G[a][i];
+			for(int j = 0; j < deg[b]; j++){
+				int b2 = G[b][j];
+				if(conflict(a, a2, b, b2)) continue;
+				for(int k = 0; k < deg[c]; k++){
+					int c2 = G[c][k];
+					if(conflict(a, a2, c, c2)) continue;
+					if(conflict(b, b2, c, c2)) continue;
+					if(d[a2][b2][c2] != -1) return d2[a][b][c] + d[a2][b2][c2];  //has been visited by q, search finished.
+					else if(d2[a2][b2][c2] != -1) continue;     //been visited by q2, not q1, ignore this node.
+					d2[a2][b2][c2] = d2[a][b][c] + 1; 	//not visited by q2 and q1, push into queue.
+					q2.push(ID(a2, b2, c2));
 				}
 			}
 		}
