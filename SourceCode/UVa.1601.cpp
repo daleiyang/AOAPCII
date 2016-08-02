@@ -2,6 +2,7 @@
 #include<cstring>
 #include<cctype>
 #include<queue>
+#include<ctime>
 using namespace std;
 
 const int maxs = 20;
@@ -33,9 +34,10 @@ int bfs(){
 	d[s[0]][s[1]][s[2]] = 0;
 	d2[t[0]][t[1]][t[2]] = 0;
 
-	while(!q.empty() || !q2.empty()){
-		//for the first queue
-		while(!q.empty()){
+	while(!q.empty() && !q2.empty()){
+
+		if(q.size() < q2.size()){
+			while(!q.empty()){
 			int u = q.front(); q.pop();
 			int a = (u>>16)&0xff, b = (u>>8)&0xff, c = u&0xff;
 			if(a == t[0] && b == t[1] && c == t[2]) return d[a][b][c]; //q1 reach target, search finished.
@@ -54,14 +56,14 @@ int bfs(){
 					}
 				}
 			}
+			}
+			while(!next.empty()){
+				q.push(next.front());
+				next.pop();
+			}
 		}
-		while(!next.empty()){
-			q.push(next.front());
-			next.pop();
-		}
-
-		//for the second queue
-		while(!q2.empty()){
+		else{
+			while(!q2.empty()){
 			int u = q2.front(); q2.pop();
 			int a = (u>>16)&0xff, b = (u>>8)&0xff, c = u&0xff;
 			if(a == s[0] && b == s[1] && c == s[2]) return d2[a][b][c]; //q2 reach target, search finished.
@@ -80,11 +82,12 @@ int bfs(){
 					}
 				}
 			}
-		}
-		while(!next.empty()){
-			q2.push(next.front());
-			next.pop();
-		}
+			}
+			while(!next.empty()){
+				q2.push(next.front());
+				next.pop();
+			}
+		}		
 	}
 	return -1;
 }
@@ -124,6 +127,7 @@ int main(){
 
 		printf("%d\n", bfs());
 	}
+	//printf("%2f\n", (double)clock()/CLOCKS_PER_SEC);
 	return 0;
 }
 
