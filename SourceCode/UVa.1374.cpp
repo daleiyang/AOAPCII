@@ -4,7 +4,7 @@ using namespace std;
 
 const int maxn = 13+1;
 
-int ans[1000 + 1], a[maxn], n;
+int a[maxn], n;
 
 bool dfs(int d, int maxd){
 	if(d == maxd && a[d] == n) return true;	
@@ -37,13 +37,10 @@ int main(){
 	freopen("UVa.1374.in", "r", stdin);
 	freopen("UVa.1374.out", "w", stdout);
 #endif
-	a[0] = 1; ans[1] = 0;
-	for(n = 2; n <= 1000; n++){
-		ans[n] = solve();
-	}
-	int x;
-	while(scanf("%d", &x) == 1 && x){
-		printf("%d\n", ans[x]);
+	a[0] = 1;
+	while(scanf("%d", &n) == 1 && n){
+		if(n == 1) printf("0\n");
+		else printf("%d\n", solve());
 	}
 	return 0;
 }
