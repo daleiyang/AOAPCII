@@ -1,6 +1,7 @@
 #include<cstdio>
 #include<cstring>
 #include<cstdlib>
+#include<ctime>
 using namespace std;
 
 const int dif = 105;
@@ -14,6 +15,8 @@ char di[4] = {'e', 'n', 's', 'w'};
 
 void dfs(int cur, int x, int y, int d){
 	if((abs(x - dif) + abs(y - dif)) > (sum[n] - sum[cur])) return; //prune
+	if((abs(x-dif) > sum[n]/2) || (abs(y-dif) > sum[n]/2)) return; //prune
+	if(x == dif && y == dif && cur < n) return; //prune
 	if(cur == n &&(x != dif || y != dif)) return;
 	if(cur == n && x == dif && y == dif) {
 		for(int i = 0; i < n; i++){printf("%c", di[s[i]]);}
@@ -71,6 +74,7 @@ int main(){
 		}
 		printf("Found %d golygon(s).\n\n", cnt);
 	}
+	//printf("Time used = %.4f\n", (double)clock()/CLOCKS_PER_SEC);
 	return 0;
 }
 
