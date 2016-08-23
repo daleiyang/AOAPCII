@@ -11,15 +11,15 @@ int bitCount(int i){
 	return i == 0 ? 0 : bitCount(i>>1) + (i&1);
 }
 
-void dfs(int u,int pre)
-{
-    for(int i=0; i < n; i++){
-        if(i != pre && st[u] & (1 << i)){
-            vis[i]++;
-            if(vis[i] < 2)
-                dfs(i,u);
-        }
-    }
+void dfs(int u, int pre){
+	for(int i = 0; i < n; i++){
+		if(i != pre && (st[u]&(1<<i))){
+			vis[i]++;
+			if(vis[i] < 2) {
+				dfs(i, u);
+			}
+		}
+	}
 }
 
 bool solve(int test){
@@ -43,24 +43,23 @@ bool solve(int test){
 	}
 
 	// checking ring
-    int link=0;
-    memset(vis,0,sizeof(vis));
-    for(int i=0; i<n; i++){
-        if(!vis[i]&&!(test&(1<<i))){
-            link++;
-            vis[i]++;
-            dfs(i,-1);
-        }
-    }
-    for(int i=0; i<n; i++)
-        if(vis[i] >= 2)
-            return false;
+	int link = 0;
+	memset(vis, 0, sizeof(vis));
+	for(int i = 0; i < n; i++){
+		if(!vis[i] && !(test&(1<<i))){
+			vis[i]++;
+			link++;
+			dfs(i, -1);
+		}
+	}
+	for(int i = 0; i < n; i++){
+		if(vis[i] >= 2) return false;
+	}
 
-	if(link-1>bitCount(test))
+	if((link-1) > bitCount(test))
 		return false;
 
 	return true;
-		
 }
 
 int main(){
