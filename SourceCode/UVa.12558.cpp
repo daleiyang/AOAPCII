@@ -67,8 +67,7 @@ int main(){
 			cin>>x;
 			skip.insert(x);
 		}
-		for(maxd = 1; ; maxd++){
-			memset(ans, -1, sizeof(ans));
+		for(maxd = 1; maxd <= 100 ; maxd++){
 			if(dfs(0, get_first(a, b), a, b)) break;
 		}
 		cout<<"Case "<<++kase<<": "<<a<<"/"<<b<<"=";
