@@ -1,0 +1,101 @@
+8 8
+XXXXXXXX
+XXXXXXXX
+XXXXXXXX
+XXXXXXXX
+XXXXXXXX
+XXXXXXXX
+XXXXXXXX
+XXXXXXXX
+8 8
+X.......
+.X......
+..X.....
+...X....
+....X...
+.....X..
+......X.
+.......X
+9 2
+XX
+XX
+XX
+XX
+XX
+XX
+XX
+XX
+XX
+2 2
+XX
+XX
+5 3
+XXX
+XXX
+XXX
+XXX
+...
+9 9
+.X.......
+........X
+.........
+.........
+.........
+...X.....
+.........
+..X......
+.....X...
+9 9
+XXXXXXXXX
+XXXXXXXXX
+XXXX.XXXX
+XXX.X.XXX
+XX.X.X.XX
+XXX.X.XXX
+XXXX.XXXX
+XXXXXXXXX
+XXXXXXXXX
+2 2
+..
+..
+5 5
+XX...
+XX...
+X...X
+X..X.
+XXXXX
+7 7
+X......
+XX.....
+X.X..X.
+X......
+X..X...
+X......
+XXXXXXX
+6 5 
+XXXXX 
+XXXXX 
+XXX.. 
+X.XX. 
+X..XX 
+X...X 
+5 6 
+XXXXXX 
+XXX... 
+XXXX.. 
+XX.XX. 
+XX..XX 
+5 6 
+XXXXXX 
+...XXX 
+..XXXX 
+.XX.XX 
+XX..XX 
+6 5 
+XXXXX 
+XXXXX 
+..XXX 
+.XX.X 
+XX..X 
+X...X 
+0
