@@ -2,6 +2,7 @@
 #include<cstring>
 #include<vector>
 #include<utility>
+#include<ctime>
 using namespace std;
 
 const int maxn = (1<<15)+50;
@@ -14,6 +15,7 @@ Node q[maxn*17];
 Move mv[maxn*17];
 int movePath[maxn*17];
 int s, start, target;
+
 int list[36][6] = {
 		{0, 1, 3, 6, 10, -1}, {0, 2, 5, 9, 14, -1},
 		{1, 3, 6, 10, -1}, {1, 4, 8, 13, -1},
@@ -62,9 +64,13 @@ bool bfs(){
 		}
 		for(int i = 0; i < 15; i++){
 			if(t.state & (1<<i)){  //node i is not empty
+				bool f2 = false;
 				for(int j = 0; j < 36; j++){
-					if(list[j][0] != i) continue; //check the path start from i
-					int idx = 1; bool f = false;
+					if(list[j][0] != i) {
+						if(f2) break;
+						else continue; //check the path start from i
+					}
+					f2 = true; int idx = 1; bool f = false;
 					while(list[j][idx] != -1){
 						int tmp = list[j][idx];
 						if(t.state & (1<<tmp)) {
@@ -115,6 +121,7 @@ int main(){
 		}
 		if(!bfs()) {printf("IMPOSSIBLE\n");}
 	}
+	//printf("Time uased = %.4f", (double)clock()/CLOCKS_PER_SEC);
 	return 0;
 }
 
