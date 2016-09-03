@@ -1,11 +1,7 @@
 #include<cstdio>
 #include<cstring>
 #include<cctype>
-#include<stack>
-#include<utility>
 using namespace std;
-
-typedef pair<int, int> PII;
 
 int len, len2;
 char s[20], c[20];
@@ -24,12 +20,12 @@ void print(){
 }
 
 void validate(){
+//condition 1 c[0] == '2' && c[1] == 'C' && c[2] == '6' && c[3] == 'C' && c[4] == '8' && c[5] == 'B' && c[6] == '3' && c[7] == 'A' && c[8] == '6' && c[9] == 'D' && c[10] == '9' && c[11] == 'D' && c[12] == '2' && c[13] == 'C' && c[14] == '6' && c[15] == 'D' && c[16] == '4'
 	int idx = 0;
 	bool valid = false;
 	char buff[10];
-	stack<PII> st;
-	deque<PII> dq;
-	
+	int q[20], front = 0, rear = 0;
+
 	for(int i = 0; i < len2; i++){
 		if(c[i] == 'A' || c[i] =='B' || c[i] == 'C' ) {valid = true;} //need at least one op
 		if(c[i] == 'D') continue; //ignore black space
@@ -46,18 +42,17 @@ void validate(){
 			}
 			if(v == 0 && idx > 1) return; //such as ''00"
 
-			//push numver into stack
-			if(!dq.empty()){
-				if(dq.back().first == 0 && dq.back().second == 0){   //o for *, 1 for +, 2 for -
-					dq.pop_back();
-					int left = dq.back().second;
-					dq.pop_back();
-					dq.push_back(PII(1, left*v));
+			//push numver into stack and take care of *
+			if(rear > 0){
+				if(q[rear-1] == 0){   //0 for *, 1 for +, 2 for -
+					rear--;
+					int left = q[--rear];
+					q[rear++] = left * v;
 				}else{
-					dq.push_back(PII(1, v));
+					q[rear++] = v;
 				}
 			}else{
-				dq.push_back(PII(1, v));
+				q[rear++] = v;
 			}
 
 			//push op into stack
@@ -66,7 +61,7 @@ void validate(){
 				if(c[i] == 'A') op = 0;
 				else if(c[i] == 'B') op = 1;
 				else if(c[i] == 'C') op = 2;
-				dq.push_back(PII(0, op));
+				q[rear++] = op;
 			}
 			idx = 0;
 		}
@@ -75,28 +70,22 @@ void validate(){
 
 	if(!valid) return;
 
+	//process the expression from left to right, only include + and -
 	int left, right, op;
-	while(1){
-		left = dq.front().second;
-		dq.pop_front();
-		if(!dq.empty()) {
-			op = dq.front().second;
-			dq.pop_front();
-			right = dq.front().second;
-			dq.pop_front();
+	left = q[front++];
+	if(rear > 1){
+		while(front < rear){
+			op = q[front++];
+			right = q[front++];
 			if(op == 1) left = left + right;
 			else if(op == 2) left = left - right;
-			dq.push_front(PII(1, left));
-		}
-		else {
-			if(left == 2000){
-				ans = true;
-				print(); 
-				return;
-			}
-			else return;
 		}
 	}
+	if(left == 2000){
+		ans = true;
+		print(); 
+	}
+	return;
 }
 
 void dfs(int d){
@@ -133,4 +122,3 @@ int main(){
 	}
 	return 0;
 }
-
