@@ -37,7 +37,7 @@ bool prune(int curr){
 		}
 	}
 	bool ans = false;
-	if(len + curr < idxB) {
+	if(len + curr < idxB) { //prune the candidate with smaller lenght
 		ans = true;
 	}
 	else if(len + curr == idxB){ //prune the candidate with same potential lenght. 
