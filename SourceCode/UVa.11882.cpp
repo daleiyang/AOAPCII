@@ -1,30 +1,65 @@
 #include<cstdio>
 #include<cstring>
+#include<algorithm>
+#include<ctime>
 using namespace std;
 
 const int maxn = 15+5, maxm = 30+5;
 
-int r, c, cnt, x[maxm], y[maxm], dig[maxm], G[maxm][maxm], num[maxm], id[maxn][maxn], vis[maxm];
-int A[maxm], B[maxm], idxB;
+int r, c, cnt, x[maxm], y[maxm], dig[maxm], G[maxm][maxm], num[maxm], id[maxn][maxn], vis[maxm], vis2[maxm];
+int A[maxm], B[maxm], idxB, q[maxm];
 int dx[4] = {0,  0, 1, -1};
 int dy[4] = {1, -1, 0,  0};
 
 char maze[maxn][maxn];
 
-bool check(){
-	
+bool prune(int curr){
+	memcpy(vis2, vis, sizeof(vis2));
+	int len = 0;
+	for(int i = 0; i < cnt; i++){
+		if(!vis2[i]){
+			int nn = 0;
+			vis2[i] = 1;
+			int front = 0, rear = 1;
+			q[front] = i;
+			while(front < rear){
+				int now = q[front];
+				nn++;
+				for(int j = 0; j < dig[now]; j++){
+					if(!vis2[G[now][j]]){
+						vis2[G[now][j]] = 1;
+						q[rear++] = G[now][j];
+					}
+				}
+				front++;
+			}
+			len = max(len, nn); //leverage bfs to find the max number in remaining non-visited space.
+		}
+	}
+	bool ans = false;
+	if(len + curr < idxB) {
+		ans = true;
+	}
+	else if(len + curr == idxB){ //prune the candidate with same potential lenght. 
+		for(int i = 0; i <= curr; i++){
+			if(A[i] == B[i]) continue;
+			if(A[i] > B[i])  break;
+			if(A[i] < B[i])  {ans = true; break;}
+		}
+	}
+	return ans;
 }
 
 void dfs(int d, int cnt){
-	vis[cnt] = 1;
 	A[d] = num[cnt];
+	if(prune(d)) return;
 	bool f = false;
 	for(int i = 0; i < dig[cnt]; i++){
 		if(!vis[G[cnt][i]]){
-			if(check()){
-				dfs(d+1, G[cnt][i]);
-				f = true;
-			}
+			vis[G[cnt][i]] = 1;
+			dfs(d+1, G[cnt][i]);
+			vis[G[cnt][i]] = 0;
+			f = true;
 		}
 	}
 	if(!f){
@@ -44,7 +79,6 @@ void dfs(int d, int cnt){
 			}
 		}
 	}
-	vis[cnt] = 0;
 }
 
 int main(){
@@ -59,7 +93,6 @@ int main(){
 		idxB = 0; B[0] = 0;
 		fgets(maze[0], maxn, stdin); // remove the new line char.
 		for(int i = 0; i < r; i++){fgets(maze[i], maxn, stdin);}
-		
 		
 		cnt = 0;
 		for(int i = 0;  i < r; i++) for(int j = 0; j < c; j++){
@@ -82,13 +115,16 @@ int main(){
 			}
 		}
 		for(int i = 0; i < cnt; i++){
+			vis[i] = 1;
 			dfs(0, i);
+			vis[i] = 0;
 		}
 		for(int i = 0; i <=idxB; i++){
 			printf("%d", B[i]);
 		}
 		printf("\n");
 	}
+	//printf("Time used:%.2f", (double)clock()/CLOCKS_PER_SEC);
 	return 0;
 }
 
