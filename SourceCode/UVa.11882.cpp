@@ -62,7 +62,7 @@ void dfs(int d, int cnt){
 			f = true;
 		}
 	}
-	if(!f){
+	if(!f){//no more space to visit
 		if(d > idxB){
 			for(int i = 0; i <= d; i++){
 				B[i] = A[i];
