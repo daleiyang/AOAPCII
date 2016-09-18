@@ -2,9 +2,10 @@
 #include<cstring>
 #include<queue>
 #include<vector>
+#include<ctime>
 using namespace std;
 
-const int maxn = 5000007;
+const int maxn = 100000;
 
 typedef long long LL;
 
@@ -179,6 +180,7 @@ int main(){
 		st |= (LL)r << 61;  //set bit 61, 62 which represent start rows
 		solve(r, c, st);
 	}
+	//printf("Time used:%.4f", (double)clock()/CLOCKS_PER_SEC);
 	return 0;
 }
 
