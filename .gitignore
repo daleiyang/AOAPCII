@@ -24,6 +24,5 @@
 
 # Executables
 *.exe
-*.out
 *.app
 SourceInsightProj/
