@@ -11,7 +11,7 @@ struct Node{
 }X[maxn], Y[maxn];
 
 int comp(Node & n, Node & n2){
-	return (n.R < n2.R) || (n.R == n2.R && n.L < n2.L);
+	return (n.R < n2.R) || (n.R == n2.R && n.L > n2.L); //there is the key
 }
 
 int comp2(Node &n, Node & n2){
