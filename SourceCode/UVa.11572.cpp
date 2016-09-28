@@ -1,10 +1,11 @@
 #include<cstdio>
 #include<algorithm>
-#include<set>
+#include<map>
 using namespace std;
 
 const int maxn = 1000000 + 5;
-int A[maxn];
+int A[maxn], last[maxn];
+map<int, int> cur;
 
 int main(){
 #ifdef LOCAL
@@ -14,15 +15,20 @@ int main(){
 	int T, n;
 	scanf("%d", &T);
 	while(T--){
+		cur.clear();
 		scanf("%d", &n);
-		for(int i = 0; i < n; i++) scanf("%d", &A[i]);
+		for(int i = 0; i < n; i++){
+			scanf("%d", &A[i]);
+			if(!cur.count(A[i])) last[i] = -1;
+			else last[i] = cur[A[i]];
+			cur[A[i]] = i;
+		}
 
-		set<int> s;
 		int L = 0, R = 0, ans = 0;
 		while(R < n){
-			while((R < n) && !s.count(A[R])) s.insert(A[R++]);
+			while(R < n && last[R] < L) R++;
 			ans = max(ans, R - L);
-			s.erase(A[L++]);
+			L++;
 		}
 		printf("%d\n", ans);
 	}
