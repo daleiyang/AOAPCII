@@ -1,11 +1,12 @@
 #include<cstdio>
 #include<algorithm>
-#include<map>
+#include<ext/hash_map>
 using namespace std;
+using namespace __gnu_cxx;
 
 const int maxn = 1000000 + 5;
 int A[maxn], last[maxn];
-map<int, int> cur;
+hash_map<int, int> cur;
 
 int main(){
 #ifdef LOCAL
