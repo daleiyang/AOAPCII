@@ -1,7 +1,6 @@
 #include<cstdio>
 using namespace std;
 
-const int maxn = 100000 + 5;
 const int maxm = 200000 + 5;
 
 int n, m;
