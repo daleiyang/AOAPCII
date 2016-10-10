@@ -9,7 +9,6 @@ int ok[maxn*2]; //represent whether sliding windows is valid or not.
 int cnt[maxn]; // used to calculate 
 int tot; //calculate how many distinct number exists in a sliding windows.
 
-
 int main(){
 #ifdef LOCAL
 		freopen("UVa.12174.in", "r", stdin);
@@ -30,9 +29,7 @@ int main(){
 		cnt[x[sidx]]++; //init for the first window
 		tot = 1; //init for the first window
 		for(int i = 0; i < n+s-1; i++){
-			int t = 0; //how many n in this window
-			for(int j = i; j < i+s; j++) 
-				if((j >= sidx) && (j <= eidx)) t++;
+			int t = min(i+s-1, eidx) - max(i, sidx) + 1; //how many n in this window
 			if(t == tot) ok[i]=1; //if the number of n in this window match tot, then this window is a valid window.
 
 			//remove the first element and add the next element, update the cnt and tot for next iteration.
