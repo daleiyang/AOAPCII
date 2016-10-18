@@ -1,17 +1,8 @@
 #include<cstdio>
-#include<queue>
 using namespace std;
 
-struct node{
-	int pos;
-	char val;
-	node(int pos = 0, char val = '0'):pos(pos),val(val){}
-	bool operator < (const node & rhs) const{
-		return (val < rhs.val || (val == rhs.val && pos > rhs.pos));
-	}
-};
-
-priority_queue<node> q;
+const int maxn = 100000 + 5;
+char a[maxn];
 
 int main(){
 #ifdef LOCAL
@@ -20,24 +11,15 @@ int main(){
 #endif
 	int d, n;
 	while(scanf("%d %d", &n, &d) == 2 && n){
-		while(!q.empty()) q.pop();
 		getchar();
-		for(int i = 0; i <= d; i++){
-			q.push(node(i, getchar()));
+		int cnt = 0, t = n-d;
+		for(int i = 0; i < n; i++){
+			char c = getchar();
+			while(cnt && cnt+n-i > t && a[cnt]<c) --cnt;
+			if(cnt < t) a[++cnt] = c;
 		}
-		int left = -1;
-		for(int i = 0; i < n-d; i++){
-			while(!q.empty()){
-				node temp = q.top(); q.pop();
-				if(temp.pos > left){
-					printf("%c", temp.val);
-					left = temp.pos;
-					break;
-				}
-			}
-			q.push(node(d+i+1, getchar()));
-		}
-		printf("\n");
+		a[cnt+1] = '\0';
+		puts(a+1);
 	}
 	return 0;
 }
