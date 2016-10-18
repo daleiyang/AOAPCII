@@ -1,9 +1,17 @@
 #include<cstdio>
+#include<queue>
 using namespace std;
 
-const int maxn = 100000 + 5;
-int a[maxn];
-char x[maxn];
+struct node{
+	int pos;
+	char val;
+	node(int pos = 0, char val = '0'):pos(pos),val(val){}
+	bool operator < (const node & rhs) const{
+		return (val < rhs.val || (val == rhs.val && pos > rhs.pos));
+	}
+};
+
+priority_queue<node> q;
 
 int main(){
 #ifdef LOCAL
@@ -11,21 +19,23 @@ int main(){
 		freopen("UVa.11491.out", "w", stdout);
 #endif
 	int d, n;
-	while(scanf("%d%d", &n, &d) == 2 && n){
-		scanf("%s", x);
-		for(int i = 0; i < n; i++) a[i] = x[i]-'0';
-		
-		int sidx = 0;
-		for(int eidx = d; eidx < n; eidx++){
-			int midx = 0, mn = -1;
-			for(int i = sidx; i <= eidx; i++){
-				if(a[i] > mn){
-					midx = i;
-					mn = a[i];
+	while(scanf("%d %d", &n, &d) == 2 && n){
+		while(!q.empty()) q.pop();
+		getchar();
+		for(int i = 0; i <= d; i++){
+			q.push(node(i, getchar()));
+		}
+		int left = -1;
+		for(int i = 0; i < n-d; i++){
+			while(!q.empty()){
+				node temp = q.top(); q.pop();
+				if(temp.pos > left){
+					printf("%c", temp.val);
+					left = temp.pos;
+					break;
 				}
 			}
-			printf("%d", a[midx]);
-			sidx = midx+1;
+			q.push(node(d+i+1, getchar()));
 		}
 		printf("\n");
 	}
