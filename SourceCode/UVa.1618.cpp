@@ -1,10 +1,11 @@
 #include<cstdio>
+#include<cstring>
 #include<algorithm>
 using namespace std;
 
 const int maxn = 5000 + 5;
 
-int desc[maxn], asc[maxn], n;
+int desc[maxn], asc[maxn], n, a[maxn];
 struct Node{
 	int val, idx;
 	Node(int val = 0, int idx = 0):val(val), idx(idx){}
@@ -18,6 +19,7 @@ void input(){
 	for(int i = 1; i <= n; i++) {
 		scanf("%d", &N[i].val);
 		N[i].idx = i;
+		a[i] = N[i].val;
 	}
 	sort(N+1, N+n+1);
 	//descending order
@@ -52,13 +54,13 @@ bool solve(int * idx){
 		if(q >= 2 && q <= n-2){//pruning q
 			s = idx[q];
 			while(s){
-				if(s <= n && s > q+1) {//pruning s
+				if(a[q] != a[s] && s <= n && s > q+1) {//pruning s
 					p = idx[s];
 					while(p){
-						if(p >= 1 && p < q) { //pruning p
+						if(a[s] != a[p] && p >= 1 && p < q) { //pruning p
 							r = idx[p];
 							while(r){
-								if(r > q && r < s) return true; //pruning r
+								if(a[p] != a[r] && r > q && r < s) return true; //pruning r
 								r = idx[r];
 							}
 						}	
