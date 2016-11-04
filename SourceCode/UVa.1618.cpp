@@ -1,92 +1,125 @@
-#include<cstdio>
-#include<cstring>
-#include<algorithm>
+//http://blog.csdn.net/playwfun/article/details/51125144
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <vector>
 using namespace std;
 
-const int maxn = 5000 + 5;
+typedef long long ll;
+#define rep( i , n) for(int i = 0 ; i<(int)n;i++)
+#define rep1(i ,x , y) for(int i = (int)x ; i<=(int)y;i++)
+const int N = 5050;
 
-int desc[maxn], asc[maxn], n, a[maxn];
-struct Node{
-	int val, idx;
-	Node(int val = 0, int idx = 0):val(val), idx(idx){}
-	bool operator < (const Node & rhs) const{
-		return val > rhs.val;
-	}
-} N[maxn];
-
-void input(){
-	scanf("%d", &n);
-	for(int i = 1; i <= n; i++) {
-		scanf("%d", &N[i].val);
-		N[i].idx = i;
-		a[i] = N[i].val;
-	}
-	sort(N+1, N+n+1);
-	//descending order
-	int cnt = 0;
-	for(int i = 1; i <= n ; i++){
-		desc[cnt] = N[i].idx;
-		cnt = N[i].idx;
-	}
-	desc[cnt] = 0;
-	//ascending order
-	cnt = 0;
-	for(int i = n; i >= 1 ; i--){
-		asc[cnt] = N[i].idx;
-		cnt = N[i].idx;
-	}
-	asc[cnt] = 0;
+int max_[N][20],min_[N][20],lg2[N]; //
+void ST(int *a,int n)
+{
+    lg2[0]=-1;
+    for(int i=1; i<=n; i++)
+        lg2[i]=lg2[i-1]+(i&(i-1)?0:1);
+    for(int i=0; i<n; i++) max_[i][0]=a[i]; //a
+    for(int j=1; j<=lg2[n]; j++)
+        for(int i=0; lg2[n-i]>=j; i++)
+            max_[i][j]=max(max_[i][j-1],max_[i+(1<<(j-1))][j-1]);
+}
+int RMQ_Max(int x,int y)
+{
+    int k=lg2[y-x+1];
+    return max(max_[x][k],max_[y-(1<<k)+1][k]);
+}
+void ST2(int *a,int n)
+{
+    lg2[0]=-1;
+    for(int i=1; i<=n; i++)
+        lg2[i]=lg2[i-1]+(i&(i-1)?0:1);
+    for(int i=0; i<n; i++) min_[i][0]=a[i]; //a
+    for(int j=1; j<=lg2[n]; j++)
+        for(int i=0; lg2[n-i]>=j; i++)
+            min_[i][j]=min(min_[i][j-1],min_[i+(1<<(j-1))][j-1]);
+}
+int RMQ_Min(int x,int y)
+{
+    int k=lg2[y-x+1];
+    return min(min_[x][k],min_[y-(1<<k)+1][k]);
 }
 
-/*
-	Because 1 <= p < q < r < s <= n && ( A[q] > A[s] > A[p] > A[r] || A[q] < A[s] < A[p] < A[r])
-	We check the possibility in this order:  q -> s -> p -> r.
-	Pruning:
-	1.   2 <= q <= n-2
-	2.   s <= n && s > q + 1
-	3.   1 <= p < q
-	4.   q < r < s
-*/
-bool solve(int * idx){
-	//brutal force
-	int q = idx[0], s, p, r;
-	while(q){
-		if(q >= 2 && q <= n-2){//pruning q
-			s = idx[q];
-			while(s){
-				if(a[q] != a[s] && s <= n && s > q+1) {//pruning s
-					p = idx[s];
-					while(p){
-						if(a[s] != a[p] && p >= 1 && p < q) { //pruning p
-							r = idx[p];
-							while(r){
-								if(a[p] != a[r] && r > q && r < s) return true; //pruning r
-								r = idx[r];
-							}
-						}	
-						p = idx[p];
-					}
-				}
-				s = idx[s];
-			}
-		}
-		q = idx[q];
-	}
-	return false;
-}
+struct San :vector<int>
+{
+    void prepare()
+    {
+        sort(begin(),end());
+        erase(unique(begin(),end()),end());
+    }
+    int get(int x)
+    {
+        return (int)(lower_bound(begin(),end(),x)-begin())+1;
+    }
+} rank2;
+int n,a[N],pos[N];
+bool cal()
+{
+    ST2(a , n);
+    ST(pos , n);
 
-int main(){
+    int ok = 0;
+    for(int i = 1 ; i<=n ; i++)
+    {
+        for(int j = i + 1 ; j<=n ; j++) if(a[j] > a[i])
+            {
+                int L = a[i] + 1;
+                int R = a[j] - 1;
+                if(L > R) continue;
+                int max_pos = RMQ_Max(L , R);
+                R = (--max_pos);
+                L = j + 1;
+                if(L > R) continue;
+                int min_val = RMQ_Min(L , R);
+                if(min_val < a[i]){
+                    ok = 1;
+                    break;
+                }
+            }
+        if(ok) break;
+    }
+    return ok;
+}
+int main()
+{
 #ifdef LOCAL
-		freopen("UVa.1618.in", "r", stdin);
-		freopen("UVa.1618.out", "w", stdout);
+			freopen("UVa.1618.in", "r", stdin);
+			freopen("UVa.1618.out", "w", stdout);
 #endif
-	int T;
-	scanf("%d", &T);
-	while(T--){
-		input();
-		if(!solve(desc) && !solve(asc)) printf("NO\n");
-		else printf("YES\n");
-	}
-	return 0;
+    int T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        scanf("%d",&n);
+        rank2.clear();
+        rep1(i , 1 , n) scanf("%d",&a[i]),rank2.push_back(a[i]);
+        rank2.prepare();
+        for(int i = 1 ; i<=n ; i++)
+        {
+            a[i] = rank2.get(a[i]);
+            pos[a[i]] = i;
+        }
+        if(cal())
+        {
+            printf("YES\n");
+            continue;
+        }
+        for(int i = 1 ; i<=n ; i++)
+        {
+            a[i] = n + 1 - a[i];
+            pos[a[i]] = i;
+        }
+        if(cal())
+        {
+            printf("YES\n");
+            continue;
+        }
+        printf("%s\n","NO");
+    }
+    return 0;
 }
 
