@@ -30,7 +30,7 @@ int main(){
 
 		// g[i] is the length of longest increasing continuous subsequence ending at i
 		g[0] = 1;
-		for(int i = 0; i < n; i++){
+		for(int i = 1; i < n; i++){
 			if(a[i-1] < a[i]) g[i] = g[i-1]+1;
 			else g[i] = 1;
 		}
@@ -46,18 +46,21 @@ int main(){
 		s.insert(Candidate(a[0], g[0]));
 
 		int ans = 1;
-		for(int i  = 1; i < n; i++){
+		//enumerate f
+		for(int i = 1; i < n; i++){
 			Candidate c(a[i], g[i]);
 			set<Candidate>::iterator it = s.lower_bound(c);//first one that is >= c
 			bool keep = true;
 			if(it != s.begin()){
 				Candidate last = *(--it); //(--it) points to the largest one that is < c
 				int len = f[i] + last.g;
-				ans = max(ans, len);
-				if(c.g <= last.g) keep = false; // only keep usefull one comparing with previous one
+				ans = max(ans, len); //Because every  (f[i] +last.g) is a valid candidate, simplify logic here.
+				if(c.g <= last.g) keep = false; // last.a < c.a, so, we only keep last.a and c.a is useless.
 			}
 			if(keep){
-				s.erase(c); //if c.a is already present, the old g must be < c.g
+				//if c.a is already present in set and based on previous logic,  the value g in set is continuous increase.
+				//line 58, so the old g must be < c.g.
+				s.erase(c);
 				s.insert(c);
 				it = s.find(c);
 				it++;
