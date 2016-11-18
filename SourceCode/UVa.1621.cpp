@@ -18,10 +18,9 @@ void add(int x){
 }
 
 int main(){
-#ifdef LOCAL
-		freopen("UVa.1621.in", "r", stdin);
-		freopen("UVa.1621.out", "w", stdout);
-#endif
+    freopen("jumping.in","r",stdin);
+    freopen("jumping.out","w",stdout);
+
 	int T;
   	scanf("%d", &T);
 	while (T--){
