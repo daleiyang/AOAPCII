@@ -7,6 +7,8 @@
 VJ  : http://vjudge.net/index  用户名:daleiyang  使用这个用户名和UVa的题号进行过滤就能看到提交记录，代码是公开状态。
 UVa : https://uva.onlinejudge.org 用户名：Dalei Yang 从2016.8.25日起，同时在VJ和UVa官网提交。
 
+如果一道题使用不同解法AC，在VJ上会有相对应的多次提交，Git上对应同样一个文件的不同版本。
+
 History：
 
 1. 2016.05.13 买到书，开始刷题。
