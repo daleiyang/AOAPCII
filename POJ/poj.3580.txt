@@ -1,0 +1,44 @@
+SuperMemo
+Time Limit: 5000MS
+
+Memory Limit: 65536K
+Total Submissions: 14787
+
+Accepted: 4618
+Case Time Limit: 2000MS
+
+Description
+Your friend, Jackson is invited to a TV show called SuperMemo in which the participant is told to play a memorizing game. At first, the host tells the participant a sequence of numbers, {A1, A2, ... An}. Then the host performs a series of operations and queries on the sequence which consists:
+ADD x y D: Add D to each number in sub-sequence {Ax ... Ay}. For example, performing "ADD 2 4 1" on {1, 2, 3, 4, 5} results in {1, 3, 4, 5, 5}
+REVERSE x y: reverse the sub-sequence {Ax ... Ay}. For example, performing "REVERSE 2 4" on {1, 2, 3, 4, 5} results in {1, 4, 3, 2, 5}
+REVOLVE x y T: rotate sub-sequence {Ax ... Ay} T times. For example, performing "REVOLVE 2 4 2" on {1, 2, 3, 4, 5} results in {1, 3, 4, 2, 5}
+INSERT x P: insert P after Ax. For example, performing "INSERT 2 4" on {1, 2, 3, 4, 5} results in {1, 2, 4, 3, 4, 5}
+DELETE x: delete Ax. For example, performing "DELETE 2" on {1, 2, 3, 4, 5} results in {1, 3, 4, 5}
+MIN x y: query the participant what is the minimum number in sub-sequence {Ax ... Ay}. For example, the correct answer to "MIN 2 4" on {1, 2, 3, 4, 5} is 2
+To make the show more interesting, the participant is granted a chance to turn to someone else that means when Jackson feels difficult in answering a query he may call you for help. You task is to watch the TV show and write a program giving the correct answer to each query in order to assist Jackson whenever he calls.
+
+Input
+The first line contains n (n ¡Ü 100000).
+The following n lines describe the sequence.
+Then follows M (M ¡Ü 100000), the numbers of operations and queries.
+The following M lines describe the operations and queries.
+
+Output
+For each "MIN" query, output the correct answer.
+
+Sample Input
+5
+1 
+2 
+3 
+4 
+5
+2
+ADD 2 4 1
+MIN 4 5
+
+Sample Output
+5
+
+Source
+POJ Founder Monthly Contest ¨C 2008.04.13, Yao Jinyu
