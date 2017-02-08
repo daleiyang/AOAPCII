@@ -86,7 +86,7 @@ struct State{
     }
 };
 
-int minimax(State& s, int player, int d){
+int alphabeta(State& s, int player, int alpha, int beta, int d){
     bool f = s.lose(player);
     if(!player && f) return minn+d; //'p' wins, the smaller (samller d), the better for 'p'
     if(player && f) return maxn-d;  //'P' wins, the greater (smaller d), the better for 'P'
@@ -94,13 +94,13 @@ int minimax(State& s, int player, int d){
     vector<State> children;
     s.expend(player, children);
 
-    int a = -INF, b = INF;
     int n = children.size();
     for(int i = 0; i < n; i++){
-        int v = minimax(children[i], player^1, d+1);
-        if(!player) a = max(a, v); else b = min(b, v);
+        int v = alphabeta(children[i], player^1, alpha, beta, d+1);
+        if(!player) alpha = max(alpha, v); else beta = min(beta, v);
+        if(beta <= alpha) break;
     }
-    return !player ? a : b;
+    return !player ? alpha : beta;
 }
 
 int main(){
@@ -113,7 +113,7 @@ int main(){
     while(T--){
         State s;
         for(int i = 0; i < 4; i++) scanf("%s", s.a[i]);
-        int score = minimax(s, 0, 0); //0 for black 'P', MAX player
+        int score = alphabeta(s, 0, -INF, INF, 0); //0 for black 'P', MAX player
         if(score > 0) printf("white (%d)\n", maxn-score);
         else if(score < 0) printf("black (%d)\n", score-minn);
     }
