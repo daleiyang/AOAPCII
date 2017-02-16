@@ -45,8 +45,17 @@ UVa : https://uva.onlinejudge.org 用户名：Dalei Yang 从2016.8.25日起，同时在VJ和
 
 #麻省理工公开课：线性代数
 |课堂讲课|完成时间|习题课|完成时间|
-|:----------|:----------|:---------:|:---------:|
+|:----------|:----------|:----------|:---------:|
 |[第1集] 方程组的几何解释|2017/02/13|[第1集] 线性代数中的几何学|2017/02/13|
 |[第2集] 矩阵消元|2017/02/14|[第3集] 矩阵的消去法|2017/02/14|
 |[第3集] 乘法和逆矩阵|2017/02/15|[第4集] 逆矩阵|2017/02/15|
 |[第4集] A的LU分解|2017/02/16|[第5集] LU分解|2017/02/16|
+
+#Microsoft’s Data Science Professional Degree
+|课堂讲课|完成时间|
+|:----------|:---------:|
+|DAT101x Data Science Orientation|2017/02/10|
+|DAT201x Querying with Transact-SQL|2017/02/12|
+|DAT205x Introduction to Data Analysis using Excel||
+|DAT206x Analyzing and Visualizing Data with Excel||
+|DS101X Statistical Thinking for Data Science and Analytics|进行中|
