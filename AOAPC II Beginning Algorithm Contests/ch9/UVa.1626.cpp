@@ -12,10 +12,10 @@ int match(char a, char b){
 }
 
 int dp(int i, int j){
-    if(i > j) return 0;
-    if(i == j) return 1;
     int& ans = d[i][j];
     if(ans >= 0) return ans;
+    if(i > j) return ans = 0;
+    if(i == j) return ans = 1;
     ans = n;
     if(match(S[i], S[j])) ans = min(ans, dp(i+1, j-1));
     for(int k = i; k < j; k++)
@@ -30,13 +30,13 @@ void print(int i, int j){
         else printf("[]");
         return;
     }
-    int ans = dp(i, j);
-    if(match(S[i], S[j]) && ans == dp(i+1, j-1)){
+    int ans = d[i][j];
+    if(match(S[i], S[j]) && ans == d[i+1][j-1]){
         printf("%c", S[i]); print(i+1, j-1); printf("%c", S[j]);
         return;
     }
     for(int k = i; k < j; k++)
-        if(ans == dp(i, k) + dp(k+1, j)){
+        if(ans == d[i][k] + d[k+1][j]){
             print(i, k); print(k+1, j);
             return;
         }
@@ -61,6 +61,7 @@ int main(){
         readline(S);
         n = strlen(S) - 1;
         memset(d, -1, sizeof(d));
+        dp(0, n-1);
         print(0, n-1);
         printf("\n");
         if(T) printf("\n");
