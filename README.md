@@ -43,6 +43,11 @@ UVa : https://uva.onlinejudge.org 用户名：Dalei Yang 从2016.8.25日起，同时在VJ和
 ||第6章　更多算法专题|||
 ||Uva在线比赛单题推荐|||
 
+#Andrew Ng: Machine Learning 
+|在线课堂|完成时间|
+|:----------|:----------|
+|Week 1|2017/03/11|
+
 #MIT 18.06：Linear Algebra
 |课堂讲课|完成时间|习题课|完成时间|
 |:----------|:----------|:----------|:---------:|
@@ -63,12 +68,3 @@ UVa : https://uva.onlinejudge.org 用户名：Dalei Yang 从2016.8.25日起，同时在VJ和
 |[第3集] 求导四则运算及三角函数导数|2017/03/05|[第4集] 分段函数的光滑化|2017/03/05|
 |[第4集] 链式法则及高阶导数|2017/03/05|||
 |[第5集] 隐函数微分法和逆函数导数 |2017/03/05|||
-
-#Microsoft’s Data Science Professional Degree
-|课堂讲课|完成时间|
-|:----------|:---------:|
-|DAT101x Data Science Orientation|2017/02/10|
-|DAT201x Querying with Transact-SQL|2017/02/12|
-|DAT205x Introduction to Data Analysis using Excel||
-|DAT206x Analyzing and Visualizing Data with Excel||
-|DS101X Statistical Thinking for Data Science and Analytics|进行中|
