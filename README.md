@@ -1,5 +1,5 @@
-#AOAPCII AOAPC II 算法竞赛入门经典 第二版 
-#AOAPCI  AOAPC I  算法竞赛入门经典 训练手册
+# AOAPCII AOAPC II 算法竞赛入门经典 第二版 
+# AOAPCI  AOAPC I  算法竞赛入门经典 训练手册
 
 作者: Dalei Yang 
 
