@@ -47,6 +47,7 @@ UVa : https://uva.onlinejudge.org 用户名：Dalei Yang 从2016.8.25日起，同时在VJ和
 |在线课堂|完成时间|
 |:----------|:----------|
 |Week 1|2017/03/11|
+|Week 2|2017/04/10|
 
 ### MIT 18.06：Linear Algebra
 |课堂讲课|完成时间|习题课|完成时间|
