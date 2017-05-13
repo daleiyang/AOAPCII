@@ -48,6 +48,7 @@ UVa : https://uva.onlinejudge.org 用户名：Dalei Yang 从2016.8.25日起，同时在VJ和
 |:----------|:----------|
 |Week 1|2017/03/11|
 |Week 2|2017/04/10|
+|Week 2|2017/05/13|
 
 ### Yoshua Bengio: Deep Learning (Text Book) 
 |章节|完成时间|

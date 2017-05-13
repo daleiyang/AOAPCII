@@ -17,6 +17,9 @@ if size(X, 2) <= 3
     plot_x = [min(X(:,2))-2,  max(X(:,2))+2];
 
     % Calculate the decision boundary line
+    % We targeting X*theta=0, so H-theta(X)=0.5
+    % so, theta1*1 + theta2*x + theta3*y = 0
+    % so, y = ...  
     plot_y = (-1./theta(3)).*(theta(2).*plot_x + theta(1));
 
     % Plot, and adjust axes for better viewing
