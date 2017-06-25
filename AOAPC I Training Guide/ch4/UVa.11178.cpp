@@ -80,9 +80,9 @@ Point getD(Point A, Point B, Point C){
 }
 
 Point read_point(){
-    int x, y;
-    scanf("%d %d", &x, &y);
-    return Point(x, y);
+    double x, y;
+    scanf("%lf%lf", &x, &y);
+    return Point(x,y);
 }
 
 int main(){
