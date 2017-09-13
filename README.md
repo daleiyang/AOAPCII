@@ -30,7 +30,7 @@ UVa : https://uva.onlinejudge.org 用户名：Dalei Yang 从2016.8.25日起，同时在VJ和
 | |第6章　数据结构基础|2016.09.18|2016.09.18|AOAPC II Beginning Algorithm Contests/ch6/|
 | |第7章　暴力求解法|2016.09.18|2016.09.18|AOAPC II Beginning Algorithm Contests/ch7/|
 | |第8章　高效算法设计|2016.11.29|2016.11.29|AOAPC II Beginning Algorithm Contests/ch8/|
-| |第9章　动态规划初步|<font color="red">进行中<font/>|AOAPC II Beginning Algorithm Contests/ch9/|
+| |第9章　动态规划初步|<font color="red">进行中<font/>||AOAPC II Beginning Algorithm Contests/ch9/|
 | |第10章　数学概念与方法||||
 | |第11章　图论模型与算法||||
 | |第12章　高级专题||||
